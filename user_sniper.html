@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Info</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            overflow: hidden;
+            color: #000;
+            background-color: #f8f8f8;
+        }
+        #vanta-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #000;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+        #username {
+            padding: 8px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #search-btn {
+            padding: 8px 20px;
+            font-size: 1em;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #output-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="vanta-container"></div>
+    <div class="container">
+        <h1>Server Info</h1>
+        <div>
+            <label for="username">Enter a username to search for:</label>
+            <input type="text" id="username" />
+            <button id="search-btn" onclick="searchUsername()">Search</button>
+        </div>
+        <div id="output-box"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script>
+        var setVanta = () => {
+            if (window.VANTA) window.VANTA.NET({
+                el: "#vanta-container",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                points: 7.00,
+                maxDistance: 25.00,
+                spacing: 10.00
+            })
+        }
+        setVanta();
+        window.edit_page.Event.subscribe("Page.beforeNewOneFadeIn", setVanta);
+    </script>
+    <script>
+        function searchUsername() {
+            const username = document.getElementById('username').value;
+            fetch(`/api/search?username=${username}`)
+                .then(response => response.json())
+                .then(data => displayResults(data))
+                .catch(error => console.error('Error:', error));
+        }
+    
+        function displayResults(data) {
+            console.log('Received data:', data); // Log the received data
+    
+            const outputBox = document.getElementById('output-box');
+            outputBox.innerHTML = ''; // Clear previous results
+    
+            if (data.error) {
+                outputBox.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+            } else {
+                // Display server and player information
+                outputBox.innerHTML += `<p>✓ Username found in a server.</p>`;
+                outputBox.innerHTML += `<h2>Server Information:</h2>`;
+                outputBox.innerHTML += `<p>Server Name: ${data.server.hostname || 'N/A'}</p>`;
+                // Add other server information as needed
+    
+                outputBox.innerHTML += `<h2>Player Information:</h2>`;
+                outputBox.innerHTML += `<p>Username: ${data.player.username || 'N/A'}</p>`;
+                outputBox.innerHTML += `<p>Ping: ${data.player.ping || 'N/A'}</p>`;
+                outputBox.innerHTML += `<p>Score: ${data.player.score || 'N/A'}</p>`;
+            }
+        }
+    </script>
+    
+</body>
+</html>
