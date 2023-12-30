@@ -92,37 +92,45 @@
         setVanta();
         window.edit_page.Event.subscribe("Page.beforeNewOneFadeIn", setVanta);
     </script>
-    <script>
-        function searchUsername() {
-            const username = document.getElementById('username').value;
-            fetch(`/api/search?username=${username}`)
-                .then(response => response.json())
-                .then(data => displayResults(data))
-                .catch(error => console.error('Error:', error));
+
+<script>
+    function searchUsername() {
+        const username = document.getElementById('username').value;
+
+        // Update the fetch URL to point to your server, which in turn fetches data from the external API
+        fetch(`/api/search?username=${username}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => displayResults(data))
+            .catch(error => console.error('Error:', error));
+    }
+
+    function displayResults(data) {
+        console.log('Received data:', data);
+
+        const outputBox = document.getElementById('output-box');
+        outputBox.innerHTML = ''; // Clear previous results
+
+        if (data.error) {
+            outputBox.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+        } else {
+            // Display server and player information
+            outputBox.innerHTML += `<p>✓ Username found in a server.</p>`;
+            outputBox.innerHTML += `<h2>Server Information:</h2>`;
+            outputBox.innerHTML += `<p>Server Name: ${data.server.hostname || 'N/A'}</p>`;
+            // Add other server information as needed
+
+            outputBox.innerHTML += `<h2>Player Information:</h2>`;
+            outputBox.innerHTML += `<p>Username: ${data.player.username || 'N/A'}</p>`;
+            outputBox.innerHTML += `<p>Ping: ${data.player.ping || 'N/A'}</p>`;
+            outputBox.innerHTML += `<p>Score: ${data.player.score || 'N/A'}</p>`;
         }
-    
-        function displayResults(data) {
-            console.log('Received data:', data); // Log the received data
-    
-            const outputBox = document.getElementById('output-box');
-            outputBox.innerHTML = ''; // Clear previous results
-    
-            if (data.error) {
-                outputBox.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
-            } else {
-                // Display server and player information
-                outputBox.innerHTML += `<p>✓ Username found in a server.</p>`;
-                outputBox.innerHTML += `<h2>Server Information:</h2>`;
-                outputBox.innerHTML += `<p>Server Name: ${data.server.hostname || 'N/A'}</p>`;
-                // Add other server information as needed
-    
-                outputBox.innerHTML += `<h2>Player Information:</h2>`;
-                outputBox.innerHTML += `<p>Username: ${data.player.username || 'N/A'}</p>`;
-                outputBox.innerHTML += `<p>Ping: ${data.player.ping || 'N/A'}</p>`;
-                outputBox.innerHTML += `<p>Score: ${data.player.score || 'N/A'}</p>`;
-            }
-        }
-    </script>
+    }
+</script>
     
 </body>
 </html>
