@@ -109,27 +109,35 @@
             .catch(error => console.error('Error:', error));
     }
 
-    function displayResults(data) {
-        console.log('Received data:', data);
+function displayResults(data) {
+    console.log('Received data:', data);
 
-        const outputBox = document.getElementById('output-box');
-        outputBox.innerHTML = ''; // Clear previous results
+    const outputBox = document.getElementById('output-box');
+    outputBox.innerHTML = ''; // Clear previous results
 
-        if (data.error) {
-            outputBox.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
-        } else {
-            // Display server and player information
-            outputBox.innerHTML += `<p>✓ Username found in a server.</p>`;
+    if (data.error) {
+        outputBox.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+    } else {
+        const username = data.player.username;
+
+        // Find the server that the user is on
+        const serverForUser = data.servers.find(server =>
+            server.players.some(player => player.username === username)
+        );
+
+        if (serverForUser) {
+            const playerInfo = serverForUser.players.find(player => player.username === username);
+
+            outputBox.innerHTML += `<p>✓ ${username} is on a server.</p>`;
             outputBox.innerHTML += `<h2>Server Information:</h2>`;
-            outputBox.innerHTML += `<p>Server Name: ${data.server.hostname || 'N/A'}</p>`;
-            // Add other server information as needed
-
-            outputBox.innerHTML += `<h2>Player Information:</h2>`;
-            outputBox.innerHTML += `<p>Username: ${data.player.username || 'N/A'}</p>`;
-            outputBox.innerHTML += `<p>Ping: ${data.player.ping || 'N/A'}</p>`;
-            outputBox.innerHTML += `<p>Score: ${data.player.score || 'N/A'}</p>`;
+            outputBox.innerHTML += `<p>Server Name: ${serverForUser.hostname || 'N/A'}</p>`;
+            outputBox.innerHTML += `<p>Ping: ${playerInfo.ping || 'N/A'}</p>`;
+            // Add other relevant server and player information as needed
+        } else {
+            outputBox.innerHTML += `<p>${username} is not currently on any server.</p>`;
         }
     }
+}
 </script>
     
 </body>
