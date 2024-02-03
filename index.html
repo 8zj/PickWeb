@@ -1,156 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💸 Pick's Services 💸</title>
-    <meta property="og:title" content="Pick's Services">
-    <meta property="og:description" content="💼 Best place to buy cheap services 💼">
-    <meta property="og:image" content="https://cdn.discordapp.com/attachments/1200410100263825409/1201191027055271936/standard3.gif?ex=65c8eb51&is=65b67651&hm=b10e6e8c4a0c906f9ce5f2e41cfaba99b9b25fd2da2ea8cf8707d3faa5da3b83&">
-    <meta property="og:url" content="https://picksecurity.tk/">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="og:color" content="#3498db">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-Hz1RwgS7vf7jXHDTj8c4LN9W/hkUxJfMl5k1XN5+Z9jmHt1Fl58nQTmFjq0yop8Gc+m4GZIQNgJf+3C3pl33pA==" crossorigin="anonymous" />
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #3498db, #2c3e50); /* Gradient background */
-            color: #fff;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💸 Pick's Services 💸</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
 
-        .transparent-box {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s ease-in-out;
-            z-index: 1;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
-        }
+    #video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
 
-        .button-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
+    #video-background {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-        .shake-button {
-            padding: 10px;
-            margin: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            cursor: pointer;
-            position: relative;
-            background-color: rgba(0, 0, 0, 0.7); /* Transparent black */
-            border-radius: 10px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            width: 80px; /* Adjust width as needed */
-        }
+    #overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 15px;
+      color: #fff;
+      text-align: center;
+    }
 
-        .shake-button:hover {
-            background-color: rgba(0, 0, 0, 0.5); /* Darken on hover */
-            color: #fff;
-        }
+    #social-buttons {
+      margin-top: 20px;
+    }
 
-        .icon {
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
+    #social-buttons button {
+      background-color: #3498db;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 0 5px;
+      border: none;
+      border-radius: 5px;
+    }
 
-        #about-me {
-            margin-top: 20px;
-            text-align: left;
-            color: #000; /* Text color for the about me section */
-        }
+    #controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
 
-        #about-me h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: #3498db; /* Heading color */
-        }
-
-        #about-me p {
-            font-size: 18px;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        #about-me p span {
-            font-weight: bold;
-        }
-
-        audio {
-            width: 100%;
-            margin-top: 20px;
-        }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
-    <script>
-        var setVanta = () => {
-            if (window.VANTA) window.VANTA.CLOUDS({
-                el: "body",
-                mouseControls: true,
-                touchControls: true,
-                gyroControls: false,
-                minHeight: 200.00,
-                minWidth: 200.00,
-                skyColor: 0xf5f5f5,
-                cloudColor: 0x1bff,
-                cloudShadowColor: 0x20202,
-                sunColor: 0xffffff,
-                sunGlareColor: 0x5d0bff,
-                sunlightColor: 0xfffefd,
-                speed: 1.60
-            });
-        }
-
-        document.addEventListener("DOMContentLoaded", setVanta);
-
-        _strk.push(function () {
-            window.edit_page.Event.subscribe("Page.beforeNewOneFadeIn", setVanta);
-        });
-    </script>
+    button {
+      background-color: #3498db;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 0 5px;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-    <div class="transparent-box" id="shaking-box">
-        <div id="about-me">
-            <h2>                About Me</h2>
-            <p>
-                💻 I code in HTML, CSS, Python, JavaScript, C#, and C++ 💻<br>
-                💼 I offer <span>Pick's Services</span>.<br>
-                💸 Best place to buy cheap services!<br>
-                🚀 We Sell Cheap Followers, Cheap Robux, Cheap Vbucks 🚀<br>
-                    Come Get Services Today Join the discord
-            </p>
-            
-        </div>
+  <div id="video-container">
+    <video id="video-background" autoplay loop muted>
+      <source src="main.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
 
-               <div class="button-container">
-            <a href="https://discord.gg/NxwYmSMCTy" class="shake-button">
-                <span>Discord</span>
-            </a>
-            <a href="https://www.tiktok.com/@pick" class="shake-button">
-                <span>Tiktok</span>
-            </a>
-            <a href="https://www.instagram.com/_kingkillv6/" class="shake-button">
-                <span>Instagram</span>
-            </a>
-        </div>
+  <div id="overlay">
+    <h1>Welcome to Pick's Services</h1>
+    <p>🚀 We Sell Cheap Followers, Cheap Robux, Cheap Vbucks 🚀</p>
 
-        <audio controls>
-            <source src="Hex_-_80purppp.mp3" type="audio/mp3">
-            Your browser does not support the audio element.
-        </audio>
+    <div id="social-buttons">
+      <button onclick="window.location.href='https://www.roblox.com/users/4083772204/profile'">Roblox</button>
+      <button onclick="window.location.href='https://discord.gg/JWHacCrDsF'">Discord</button>
+      <button onclick="window.location.href='https://github.com/8zj'">GitHub</button>
+      <button onclick="window.location.href='https://www.instagram.com/_kingkillv6/'">Instagram</button>
     </div>
+  </div>
+
+  <div id="controls">
+    <button id="play-button">Play</button>
+    <button id="mute-button">Unmute</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var video = document.getElementById('video-background');
+      var playButton = document.getElementById('play-button');
+      var muteButton = document.getElementById('mute-button');
+
+      playButton.addEventListener('click', function () {
+        if (video.paused) {
+          video.play();
+          playButton.innerText = 'Pause';
+        } else {
+          video.pause();
+          playButton.innerText = 'Play';
+        }
+      });
+
+      muteButton.addEventListener('click', function () {
+        video.muted = !video.muted;
+        muteButton.innerText = video.muted ? 'Unmute' : 'Mute';
+      });
+    });
+  </script>
 </body>
 </html>
